@@ -1,1 +1,1 @@
-module.exports = require('./bin/dev-build-release');
+module.exports = require('./bin/dev-build-feature');
