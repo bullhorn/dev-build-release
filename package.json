@@ -1,5 +1,5 @@
 {
-  "name": "dev-build-release",
+  "name": "dev-build-feature",
   "version": "0.0.4",
   "description": "Simple tool to append the build number to the package.json for a development release",
   "main": "index.js",
