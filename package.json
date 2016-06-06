@@ -22,9 +22,9 @@
   "author": "Joshua Godi <joshuagodi@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/arajiv/dev-build-release/issues"
+    "url": "https://github.com/jgodi/dev-build-release/issues"
   },
-  "homepage": "https://github.com/arajiv/dev-build-release#readme",
+  "homepage": "https://github.com/jgodi/dev-build-release#readme",
   "dependencies": {
     "chalk": "^1.1.1",
     "yargs": "^4.1.0"
