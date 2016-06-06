@@ -1,5 +1,5 @@
 {
-  "name": "dev-build-feature",
+  "name": "dev-build-release",
   "version": "1.3.0",
   "description": "Simple tool to append the build number to the package.json for a development release",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "dev-build-release": "./bin/dev-build-feature"
+    "dev-build-release": "./bin/dev-build-release"
   },
   "repository": {
     "type": "git",

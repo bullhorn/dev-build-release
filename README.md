@@ -4,6 +4,6 @@
 
 ## Usage
 
-You must use `dev-build-feature` in a folder with a `package.json` and a remote to push to.
+You must use `dev-build-release` in a folder with a `package.json` and a remote to push to.
 
-`dev-build-feature -b BUILD_NUMBER -g BRANCH_NAME`
+`dev-build-release -b BUILD_NUMBER -g BRANCH_NAME`
