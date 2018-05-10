@@ -19,8 +19,11 @@ if (gitBranch === 'master') {
     newVersion = utils.bumpWithBranch(currentVersion, 0, gitBranch) + ' - ' + utils.bumpWithBranch(currentVersion, 999999, gitBranch);
 }
 
+utils.log('=================HOW TO VERSION=================');
 if (parentRepos) {
-    utils.log('Update package.json of the following repos to see your changes: ' + parentRepos);
+    utils.log('Update package.json of the following repos to see your changes:');
+    utils.log(parentRepos.split(',').join('\n') + '\n');
 }
 utils.log('Version of ' + pkg.name + ':');
-utils.log(newVersion, 'green');
+utils.log(newVersion, 'white');
+utils.log('================================================');
