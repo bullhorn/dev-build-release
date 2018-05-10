@@ -1,0 +1,79 @@
+#!/usr/bin/env node
+
+var path = require('path'),
+    fs = require('fs'),
+    os = require('os'),
+    gitInfo = require('git-repo-info')(),
+    utils = require('./utils'),
+    parentPackage = utils.getParentPackage();
+
+function getTime() {
+    var today = new Date();
+    var options = {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric' ,
+        timeZoneName: 'short'
+    };
+    return today.toLocaleDateString('en-us', options);
+}
+
+function getBhVersionInfo() {
+    var bhVersionPkg;
+    try {
+        bhVersionPkg = JSON.parse(fs.readFileSync('./package.json'));
+    } catch (e) {
+        utils.error('Could not open the package.json!');
+    }
+
+    return {
+        name: bhVersionPkg.name,
+        version: bhVersionPkg.version
+    }
+}
+
+function getCommitUrl(hash, parentPackage) {
+    if (hash && parentPackage.homepage) {
+        return parentPackage.homepage + '/' + hash;
+    }
+    return undefined;
+}
+
+var versionJson = {
+    project: parentPackage.name,
+    version: parentPackage.version,
+    build: {
+        url: process.env.BUILD_URL,
+        name: process.env.JOB_NAME,
+        number: process.env.BUILD_NUMBER,
+        buildTime: getTime(),
+        machine: os.hostname()
+    },
+    tools: {
+        git: {
+            branch: gitInfo.branch,
+            hash: gitInfo.sha,
+            tags: (gitInfo.tag) ? gitInfo.tag : undefined,
+            originUrl: (parentPackage.repository && parentPackage.repository.url) ? parentPackage.repository.url : undefined,
+            commitUrl: getCommitUrl(gitInfo.sha, parentPackage)
+        },
+        plugin: getBhVersionInfo(),
+        node: {
+            version: process.version
+        },
+        os: {
+            name: os.type(),
+            version: os.release()
+        }
+    }
+}
+
+try {
+    fs.writeFileSync(path.resolve(process.cwd(), './version.json'), JSON.stringify(versionJson, null, 2));
+} catch (e) {
+    utils.error('Could not write to the package.json!\n' + e);
+}
