@@ -25,7 +25,11 @@ function getTime() {
 function getBhVersionInfo() {
     var bhVersionPkg;
     try {
-        bhVersionPkg = JSON.parse(fs.readFileSync('./package.json'));
+        var bhVersionPackageJsonPath = path.resolve(process.cwd(), './node_modules/dev-build-release/package.json');
+        if (!fs.existsSync(bhVersionPackageJsonPath)) {
+            bhVersionPackageJsonPath = path.resolve(process.cwd(), './package.json');
+        }
+        bhVersionPkg = JSON.parse(fs.readFileSync(bhVersionPackageJsonPath));
     } catch (e) {
         utils.error('Could not open the package.json!');
     }
@@ -36,11 +40,34 @@ function getBhVersionInfo() {
     }
 }
 
-function getCommitUrl(hash, parentPackage) {
-    if (hash && parentPackage.homepage) {
-        return parentPackage.homepage + '/' + hash;
+function getCommitUrl(hash, package) {
+    return getRepoUrl(parentPackage) + '/' + hash;
+}
+
+function getRepoUrl(package) {
+    return (package.repository && package.repository.url) ? package.repository.url : undefined;
+}
+
+function getDependencyInfo(dependency) {
+    var info;
+    try {
+        var versionInfoPath = path.resolve(process.cwd(), './node_modules/' + dependency + '/version.json');
+        if (!fs.existsSync(versionInfoPath)) {
+            versionInfoPath = path.resolve(process.cwd(), './node_modules/' + dependency + '/package.json');
+        }
+        info = JSON.parse(fs.readFileSync(versionInfoPath));
+    } catch(e) {
+        info = 'Unable to parse version information about ' + dependency;
     }
-    return undefined;
+    return info;
+}
+
+function getDependencies(package) {
+    var allDependencies = {};
+    for (var dependency in package.dependencies) {
+        allDependencies[dependency] = getDependencyInfo(dependency);
+    }
+    return allDependencies;
 }
 
 var versionJson = {
@@ -58,7 +85,7 @@ var versionJson = {
             branch: gitInfo.branch,
             hash: gitInfo.sha,
             tags: (gitInfo.tag) ? gitInfo.tag : undefined,
-            originUrl: (parentPackage.repository && parentPackage.repository.url) ? parentPackage.repository.url : undefined,
+            originUrl: getRepoUrl(parentPackage),
             commitUrl: getCommitUrl(gitInfo.sha, parentPackage)
         },
         plugin: getBhVersionInfo(),
@@ -69,7 +96,8 @@ var versionJson = {
             name: os.type(),
             version: os.release()
         }
-    }
+    },
+    dependencies: getDependencies(parentPackage)
 }
 
 try {
