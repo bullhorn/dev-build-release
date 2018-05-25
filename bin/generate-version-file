@@ -106,7 +106,8 @@ var versionJson = {
 }
 
 try {
-    var locationToWrite = path.resolve(process.cwd(), './' + argv.l || '' + 'version.json');
+    console.log(argv.l);
+    var locationToWrite = path.resolve(process.cwd(), './' + argv.l || '' + '/version.json');
     var orig = path.resolve(process.cwd(), './version.json');
     console.log('locationToWrite', locationToWrite);
     console.log('orig', orig);
