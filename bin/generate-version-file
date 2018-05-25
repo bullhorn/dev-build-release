@@ -82,7 +82,7 @@ var versionJson = {
     },
     tools: {
         git: {
-            branch: gitInfo.branch,
+            branch: gitInfo.branch || process.env.BRANCH_NAME,
             hash: gitInfo.sha,
             tags: (gitInfo.tag) ? gitInfo.tag : undefined,
             originUrl: getRepoUrl(parentPackage),
