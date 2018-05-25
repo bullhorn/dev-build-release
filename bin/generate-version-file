@@ -1,4 +1,8 @@
 #!/usr/bin/env node
+// Example Commands:
+// generate-version-file
+// generate-version-file -l build/
+// generate-version-file -l dist/
 
 var path = require('path'),
     fs = require('fs'),
@@ -102,7 +106,7 @@ var versionJson = {
 }
 
 try {
-    var locationToWrite = path.resolve(argv.l || process.cwd(), './version.json');
+    var locationToWrite = path.resolve(process.cwd(), './' + argv.l || '' + 'version.json');
     fs.writeFileSync(locationToWrite, JSON.stringify(versionJson, null, 2));
 } catch (e) {
     utils.error('Could not write to the package.json!\n' + e);
