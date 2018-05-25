@@ -5,7 +5,8 @@ var path = require('path'),
     os = require('os'),
     gitInfo = require('git-repo-info')(),
     utils = require('./utils'),
-    parentPackage = utils.getParentPackage();
+    parentPackage = utils.getParentPackage(),
+    argv = require('yargs').argv;
 
 function getTime() {
     var today = new Date();
@@ -101,7 +102,8 @@ var versionJson = {
 }
 
 try {
-    fs.writeFileSync(path.resolve(process.cwd(), './version.json'), JSON.stringify(versionJson, null, 2));
+    var locationToWrite = path.resolve(argv.l || process.cwd(), './version.json');
+    fs.writeFileSync(locationToWrite, JSON.stringify(versionJson, null, 2));
 } catch (e) {
     utils.error('Could not write to the package.json!\n' + e);
 }
