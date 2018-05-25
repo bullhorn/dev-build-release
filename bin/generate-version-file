@@ -107,7 +107,10 @@ var versionJson = {
 
 try {
     var locationToWrite = path.resolve(process.cwd(), './' + argv.l || '' + 'version.json');
+    var orig = path.resolve(process.cwd(), './version.json');
+    console.log('locationToWrite', locationToWrite);
+    console.log('orig', orig);
     fs.writeFileSync(locationToWrite, JSON.stringify(versionJson, null, 2));
 } catch (e) {
-    utils.error('Could not write to the package.json!\n' + e);
+    utils.error('Could not write to the version.json!\n' + e);
 }
