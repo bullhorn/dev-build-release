@@ -8,7 +8,7 @@ var utils = require('./utils'),
 var pkg = utils.getParentPackage();
 var currentVersion = pkg.version;
 var gitBranch = gitInfo.branch;
-var parentRepos = argv.p;   // repos that depend on current repo
+var parentrepositories= argv.p;   // repositoriesthat depend on current repo
 var newVersion;
 
 if (!gitBranch) {
@@ -24,7 +24,7 @@ if (!gitBranch) {
 
 utils.log('=================HOW TO VERSION=================');
 if (parentRepos) {
-    utils.log('Update package.json of the following repos to see your changes:');
+    utils.log('Update package.json of the following repositories to see your changes:');
     utils.log(parentRepos.split(',').join('\n') + '\n');
 }
 utils.log('Version of ' + pkg.name + ':');
