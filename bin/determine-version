@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Example: ./node_modules/dev-build-release/bin/dev-build-release -b ${BUILD_NUMBER} -g ${GIT_BRANCH}
+// Example: ./node_modules/dev-build-release/bin/determine-version -p ATS_CRM/coldfusion
 
 var utils = require('./utils'),
     gitInfo = require('git-repo-info')(),
@@ -8,10 +8,13 @@ var utils = require('./utils'),
 var pkg = utils.getParentPackage();
 var currentVersion = pkg.version;
 var gitBranch = gitInfo.branch;
-var parentRepos = argv.p;
+var parentRepos = argv.p;   // repos that depend on current repo
 var newVersion;
 
-if (gitBranch === 'master') {
+if (!gitBranch) {
+    utils.error('ERROR: Unable to determine current branch')
+    process.exit();
+} else if (gitBranch === 'master') {
     newVersion = currentVersion;
 } else if (gitBranch === 'development') {
     newVersion = utils.bump(currentVersion, buildNumber);
