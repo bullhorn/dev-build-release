@@ -16,7 +16,7 @@ if (!currentVersion) {
     utils.error('Could not find the current version!');
 }
 
-if (!newVersion || !buildNumber) {
+if (!newVersion && !buildNumber) {
     utils.error('Could not find the build number(-b) or the override version(-o)!');
 }
 
