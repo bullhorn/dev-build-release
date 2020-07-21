@@ -17,7 +17,7 @@ if (!gitBranch) {
 } else if (gitBranch === 'master') {
     newVersion = currentVersion;
 } else if (gitBranch === 'development') {
-    newVersion = utils.bump(currentVersion, buildNumber);
+    newVersion = utils.bump(currentVersion, 0) + ' - ' + utils.bump(currentVersion, 999999);
 } else {
     newVersion = utils.bumpWithBranch(currentVersion, 0, gitBranch) + ' - ' + utils.bumpWithBranch(currentVersion, 999999, gitBranch);
 }
@@ -29,4 +29,10 @@ if (parentRepos) {
 }
 utils.log('Version of ' + pkg.name + ':');
 utils.log(newVersion, 'white');
+
+if (gitBranch === 'development') {
+    utils.log('\nAlternate Version of ' + pkg.name + ':');
+    utils.log('latest', 'white');
+}
+
 utils.log('================================================');
