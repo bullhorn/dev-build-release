@@ -14,6 +14,10 @@ Updates version of package.json to a "feature" branch version schema
 
 Updates version of package.json to a "development" branch version schema
 
+`dev-build-release -o 1.2.3`
+
+Updates version of package.json to a hardcoded version(1.2.3, in the above example)
+
 # determine-version
 
 > Outputs message about what repositories to update and what the version of this project should be
