@@ -10,20 +10,22 @@ var pkg = utils.getParentPackage();
 var currentVersion = pkg.version;
 var buildNumber = argv.b;
 var gitBranch = argv.g;
-var newVersion;
+var newVersion = argv.o;
 
 if (!currentVersion) {
     utils.error('Could not find the current version!');
 }
 
-if (!buildNumber) {
-    utils.error('Could not find the build number!');
+if (!newVersion && !buildNumber) {
+    utils.error('Could not find the build number(-b) or the override version(-o)!');
 }
 
-if (gitBranch) {
-    newVersion = utils.bumpWithBranch(currentVersion, buildNumber, gitBranch);
-} else {
-    newVersion = utils.bump(currentVersion, buildNumber)
+if (!newVersion) {
+    if (gitBranch) {
+        newVersion = utils.bumpWithBranch(currentVersion, buildNumber, gitBranch);
+    } else {
+        newVersion = utils.bump(currentVersion, buildNumber)
+    }
 }
 
 utils.log('Updating version to ' + newVersion);

@@ -46,7 +46,7 @@ function getBhVersionInfo() {
 }
 
 function getCommitUrl(hash, package) {
-    return getRepoUrl(parentPackage) + '/' + hash;
+    return getRepoUrl(parentPackage) + '/commit/' + hash;
 }
 
 function getRepoUrl(package) {
