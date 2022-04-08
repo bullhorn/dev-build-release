@@ -21,12 +21,12 @@
     "release",
     "dev"
   ],
-  "author": "Joshua Godi <joshuagodi@gmail.com>",
+  "author": "Bullhorn, Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jgodi/dev-build-release/issues"
+    "url": "https://github.com/bullhorn/dev-build-release/issues"
   },
-  "homepage": "https://github.com/jgodi/dev-build-release#readme",
+  "homepage": "https://github.com/bullhorn/dev-build-release#readme",
   "dependencies": {
     "chalk": "^1.1.1",
     "git-repo-info": "^2.0.0",
