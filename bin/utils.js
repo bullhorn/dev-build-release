@@ -4,7 +4,7 @@ var chalk = require('chalk'),
 
 module.exports = {
     bumpWithBranch: function(version, build, branch) {
-        var branchNameCharReplaced = branch.replaceAll('/', '-');
+        var branchNameCharReplaced = branch.replace(/\//g, '-');
         return version + '-' + branchNameCharReplaced + '.' + build;
     },
     bump: function(version, build) {
