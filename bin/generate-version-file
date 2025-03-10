@@ -79,9 +79,9 @@ var versionJson = {
     project: parentPackage.name,
     version: parentPackage.version,
     build: {
-        url: process.env.BUILD_URL,
-        name: process.env.JOB_NAME,
-        number: process.env.BUILD_NUMBER,
+        url: process.env.BUILD_URL ?? process.env.CI_PIPELINE_URL,
+        name: process.env.JOB_NAME ?? process.env.CI_PROJECT_DIR,
+        number: process.env.BUILD_NUMBER ?? process.env.CI_PIPELINE_ID,
         buildTime: getTime(),
         machine: os.hostname()
     },
