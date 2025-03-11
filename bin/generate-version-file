@@ -76,7 +76,7 @@ function getDependencies(package) {
 }
 
 function extractBuildInfo(jenkinsVariable, gitLabVariable) {
-    let value = jenkinsVariable;
+    let value = process.env[jenkinsVariable];
     if (!value || value.length === 0) {
         value = gitLabVariable;
         utils.log("Must be a gitlab build, will use " + gitLabVariable + " variable instead '" + value + "'");
@@ -88,9 +88,9 @@ var versionJson = {
     project: parentPackage.name,
     version: parentPackage.version,
     build: {
-        url: extractBuildInfo(process.env.BUILD_URL, process.env.CI_PIPELINE_URL),
-        name: extractBuildInfo(process.env.JOB_NAME, process.env.CI_PROJECT_DIR),
-        number: extractBuildInfo(process.env.BUILD_NUMBER, process.env.CI_PIPELINE_ID),
+        url: extractBuildInfo('BUILD_URL', 'CI_PIPELINE_URL'),
+        name: extractBuildInfo('JOB_NAME', 'CI_PROJECT_DIR'),
+        number: extractBuildInfo('BUILD_NUMBER', 'CI_PIPELINE_ID'),
         buildTime: getTime(),
         machine: os.hostname()
     },
