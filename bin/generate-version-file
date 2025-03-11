@@ -96,7 +96,7 @@ var versionJson = {
     },
     tools: {
         git: {
-            branch: gitInfo.branch || process.env.BRANCH_NAME,
+            branch: gitInfo.branch || extractBuildInfo('BRANCH_NAME', 'CI_COMMIT_REF_NAME'),
             hash: gitInfo.sha,
             tags: (gitInfo.tag) ? gitInfo.tag : undefined,
             originUrl: getRepoUrl(parentPackage),
