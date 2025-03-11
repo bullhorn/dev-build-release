@@ -75,19 +75,28 @@ function getDependencies(package) {
     return allDependencies;
 }
 
+function extractBuildInfo(jenkinsVariable, gitLabVariable) {
+    let value = process.env[jenkinsVariable];
+    if (!value || value.length === 0) {
+        value = process.env[gitLabVariable];
+        utils.log("Must be a gitlab build, will use " + gitLabVariable + " variable instead '" + value + "'");
+    }
+    return value;
+}
+
 var versionJson = {
     project: parentPackage.name,
     version: parentPackage.version,
     build: {
-        url: process.env.BUILD_URL,
-        name: process.env.JOB_NAME,
-        number: process.env.BUILD_NUMBER,
+        url: extractBuildInfo('BUILD_URL', 'CI_PIPELINE_URL'),
+        name: extractBuildInfo('JOB_NAME', 'CI_PROJECT_DIR'),
+        number: extractBuildInfo('BUILD_NUMBER', 'CI_PIPELINE_ID'),
         buildTime: getTime(),
         machine: os.hostname()
     },
     tools: {
         git: {
-            branch: gitInfo.branch || process.env.BRANCH_NAME,
+            branch: gitInfo.branch || extractBuildInfo('BRANCH_NAME', 'CI_COMMIT_REF_NAME'),
             hash: gitInfo.sha,
             tags: (gitInfo.tag) ? gitInfo.tag : undefined,
             originUrl: getRepoUrl(parentPackage),
