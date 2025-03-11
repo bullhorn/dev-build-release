@@ -78,7 +78,7 @@ function getDependencies(package) {
 function extractBuildInfo(jenkinsVariable, gitLabVariable) {
     let value = process.env[jenkinsVariable];
     if (!value || value.length === 0) {
-        value = gitLabVariable;
+        value = process.env[gitLabVariable];
         utils.log("Must be a gitlab build, will use " + gitLabVariable + " variable instead '" + value + "'");
     }
     return value;
